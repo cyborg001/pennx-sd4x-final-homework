@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Crear Animal</title>
+	<style>
+		label{
+			display:inline-block;
+			width:100px;
+			text-align: right;
+		}
+		select{
+			width:173px;
+		}
+		#aceptar{
+			margin-left: 100px;
+		}
+	</style>
+</head>
+<body>
+	<form action='/createAnimal' id='formulario' method='post'>
+		<h3>Nuevo animal</h3>
+		<label>Nombre:</label><input type='text' name='name' /><br>
+		<label>Especie:</label><input type="text" name="species" /><br>
+		<label>Raza:</label><input type="text" name="breed" /><br>
+		<label>Masculino:</label><input id='masculino'type="radio" name="masculino"
+										onchange='handleMasculino()' checked />
+		<label>Femenino:</label><input type="radio" id='femenino'name="femenino" 
+										onchange="handleFemenino()" /><br>
+		<label>Edad:</label><input type="number" name="age" /><br>
+		<label>Caracteristicas:</label><br> <select style='margin-left: 100px;margin-top: -17px' name='traits' multiple size='5' form='formulario' >
+							  <option value="loco" >Loco</option>
+							  <option value="jugueton">Jugueton</option>
+							  <option value="leal">Leal</option>
+							  <option value="amigable">Amigable</option>
+							  <option value="hambriento">Hambriento</option>
+							</select><br><br>
+		<input type="submit" id='aceptar' value='Aceptar'>
+	</form>
+	<script>
+		let masc = document.getElementById('masculino');
+		let fem = document.getElementById('femenino');
+		function handleMasculino(){
+			masc.checked=true;
+			fem.checked=false;
+		}
+		function handleFemenino(){
+			masc.checked=false;
+			fem.checked=true;
+		}
+	</script>
+</body>
+</html>
