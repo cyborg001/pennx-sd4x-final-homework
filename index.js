@@ -32,6 +32,34 @@ app.use('/createAnimal',(req,res)=>{
 	});
 });
 
+app.use('/createToy',(req,res)=>{
+	let newToy = new Toy(
+		req.body
+	);
+	console.log(newToy);
+	newToy.save((err)=>{
+		if(err){
+			res.type('html').status(500);
+			res.send('Error: '+err);
+		}else{
+			res.send('Nuevo juguete creado.');
+		}
+	})
+})
+
+app.use('/findToy',(req,res)=>{
+	let searchToy = req.query.id;
+	Toy.findOne({id:searchToy},(err,toy)=>{
+		if(err){
+			res.type('html').status(500);
+			res.send('Error: '+err);
+		}else{
+		 	console.log(toy);
+		 	res.json(toy);
+		 }
+	});
+})
+
 
 app.use('/', (req, res) => {
 	
