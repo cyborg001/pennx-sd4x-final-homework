@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Encontrar Juguete</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+	button{
+		margin-left: 20px;
+	}
+</style>
+</head>
+<body>
+	<form>
+		Id:<input type="text" name="id" id='id-input' />
+		
+	</form>
+	<button>Aceptar</button><br><br>
+	Resultado:
+	<p id='resultado'></p>
+	<script >
+		
+		
+		
+
+		$('button').on('click',()=>{
+			let id = $('#id-input').val();
+			let url='http://localhost:3000/findToy/'
+			let query = '?'
+			if(id){
+					query+='id='+id;
+				}
+			url+=query;
+			let resultado=$("#resultado");
+
+			$.getJSON(url,(toy,status)=>{;
+				resultado.html('');
+				resultado.append('id: '+toy.id+'<br>nombre: '+toy.name+'<br>precio: '+toy.price);
+			});
+
+		});
+	</script>
+</body>
+</html>
