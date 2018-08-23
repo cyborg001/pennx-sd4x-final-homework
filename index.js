@@ -20,8 +20,8 @@ app.use('/createAnimal',(req,res)=>{
 	let newAnimal = new Animal(
 		req.body
 	)
-	console.log(req.body)
-	console.log(newAnimal);
+	//console.log(req.body)
+	//console.log(newAnimal);
 	newAnimal.save((err)=>{
 		if(err){
 			res.type('html').status(500);
@@ -59,12 +59,50 @@ app.use('/findToy',(req,res)=>{
 		 }
 	});
 })
+app.use('/findAnimal',(req,res)=>{
+	let query = {};
+	if(req.query.specie){
+		query.species = {$regex: req.query.specie};
+	}
+	if(req.query.trait){
+		query['traits'] = {$regex: req.query.trait};
+	}
+	if(req.query.gender){
+		query.gender={$regex: req.query.gender};
+	}
+	if(Object.keys(query).length==0){
+		res.json({});
+	}
+	else{
+		Animal.find(query,(err,animals)=>{
+			if(err){
+				res.type('html').status(500);
+				res.send('Error: '+err);
+			}else if(animals.length==0){
+					res.json({})
+			}else{
+				let animales=[];
+				animales=animals.map((animal)=>{
+					return {name:animal.name,
+					 species:animal.species,
+					 breed:animal.breed,
+					 gender:animal.gender,
+					 age:animal.age}
+				});
+				res.json(animals);
 
+			}
+		});
+	}
+
+
+});
 
 app.use('/', (req, res) => {
 	
 	res.json({ msg : 'It works!' });
-    });
+});
+
 
 
 app.listen(3000, () => {
